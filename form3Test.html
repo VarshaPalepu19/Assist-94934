@@ -1,0 +1,70 @@
+<template>
+    <div class="slds-size_small">
+        <lightning-card>
+            <div class="slds-var-p-around_medium">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-4">
+                <div class="slds-m-around_medium">
+            <template for:each={item} for:item="i" if:true={item}>
+                        <div key={i.Id}>
+                        <lightning-card onclick={handleForm}>
+                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaMV9bKNB9ROgcRSplVkvgyHlUBAg4DCQrTA&usqp=CAU"/> 
+                        <p class="p1">{i.Name}</p>
+                        <p class="p2">{i.SubTitle__c}</p>
+                </lightning-card>
+            </div>
+        </template>
+        <lightning-card>
+            <!-- modal start -->
+          <template if:true={customFormModal}>
+               <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+               aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+               <div class="slds-modal__container">
+                   <!--Modal header starts-->
+                   <header class="slds-modal__header">
+                       <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                       title="Close" onclick={closeModal}>
+                       <lightning-icon icon-name="utility:close" alternative-text="close"
+                       variant="inverse" size="small" ></lightning-icon>
+                       <span class="slds-assistive-text">Close</span>
+                      </button>
+                      <h2 class="slds-text-heading_medium slds-hyphenate" style="font-weight:bold" if:true={isEditForm}>Edit Your Information</h2>
+                  </header>
+                  <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" >
+                      <div if:true={isEditForm} class="slds-theme_default">
+                          <lightning-record-edit-form layout-type="Full" record-id={currentRecordId} object-api-name="Form3__c" onsubmit={handleSubmit} onsuccess={handleSuccess}>
+                              <lightning-messages></lightning-messages>
+                               <lightning-input-field field-name="Name"></lightning-input-field>
+                              <lightning-input-field field-name="SubTitle__c"></lightning-input-field>
+                              <lightning-input-field field-name="Subject__c"></lightning-input-field>
+                              <div style="text-align:center;">
+                                  <lightning-button class="slds-m-top_small"
+                                                    variant="brand"
+                                                    type="submit"
+                                                    name="update"
+                                                    label="Update Record" style="font-weight:bold"></lightning-button>
+                              </div>
+                          </lightning-record-edit-form><br/>
+                          <div></div>
+                      </div>
+                       <!-- modal footer start-->
+              <footer class="slds-modal__footer" if:false={isEditForm}>
+                  <lightning-button variant="brand"
+                                    label="Close"
+                                    title="Close"
+                                    onclick={closeModal}></lightning-button>
+              </footer>
+                  </div>
+                   </div>
+                  </section>
+                  <div class="slds-backdrop slds-backdrop_open">
+                  </div>
+              </template>
+      </lightning-card>
+    </div>
+    </div>
+        </div>
+        </div>
+        </lightning-card>
+        </div>
+</template>
